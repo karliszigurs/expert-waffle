@@ -1,0 +1,98 @@
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getAccountsEmptyList=[
+  "[]"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getAccountsHappyPath=[
+  "[{\"account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"currency\":\"EUR\",\"balance\":1}]"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getAccountsInvalidClient=[
+  "{\"error\":\"404 client not found\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getAccountsWhenFetchingAccounts=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getAccountsWhenFetchingClient=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getHistoryHappyPath=[
+  "{\"account\":{\"account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"currency\":\"EUR\",\"balance\":1},\"offset\":0,\"limit\":10,\"transactions\":[{\"transaction_id\":\"424dfead-4625-4dd4-a025-642542eebfdf\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"8c6724de-0879-4392-ba25-cf8dcc79ca36\",\"amount\":100,\"account_balance\":200,\"description\":\"tx one\"},{\"transaction_id\":\"ed713c8c-46d1-43b2-9474-63e702983958\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"CREDIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"8c6724de-0879-4392-ba25-cf8dcc79ca36\",\"destination_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"amount\":300,\"account_balance\":400,\"description\":\"tx two\"},{\"transaction_id\":\"5a63b4db-2e30-45bc-a7b7-2dc09f3aaddd\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"8c6724de-0879-4392-ba25-cf8dcc79ca36\",\"amount\":100,\"account_balance\":200,\"description\":\"tx three\"},{\"transaction_id\":\"ed49edc4-b1e7-4f89-8bb6-0ef6d917b7da\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"CREDIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"8c6724de-0879-4392-ba25-cf8dcc79ca36\",\"destination_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"amount\":300,\"account_balance\":400,\"description\":\"tx four\"},{\"transaction_id\":\"c6d3cd1f-8fe6-4498-a563-16dbbdaf5bd1\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"8c6724de-0879-4392-ba25-cf8dcc79ca36\",\"amount\":100,\"account_balance\":200,\"description\":\"tx five\"}]}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getHistoryInvalidLimit=[
+  "{\"error\":\"400 limit must be positive\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getHistoryInvalidOffset=[
+  "{\"error\":\"400 offset must be 0 or positive\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getHistoryMissingAccount=[
+  "{\"error\":\"404 account not found\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.getHistoryValidLimitAndOffset=[
+  "{\"account\":{\"account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"currency\":\"EUR\",\"balance\":1},\"offset\":100,\"limit\":100,\"transactions\":[]}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferHappyPath=[
+  "{\"transaction_id\":\"424dfead-4625-4dd4-a025-642542eebfdf\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"1ea6d532-faca-4240-aacf-0356b1e0e950\",\"amount\":100,\"account_balance\":200,\"description\":\"tx one\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferInvalidAmount=[
+  "{\"error\":\"400 amount must be positive\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferInvalidCurrency=[
+  "{\"error\":\"400 currency does not match destination account\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferMalformedAmount=[
+  "{\"error\":\"400 amount 'I'm a teapot!' is invalid\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferMissingAccount=[
+  "{\"error\":\"404 source_account_id invalid\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferMissingDestinationAccount=[
+  "{\"error\":\"404 destination_account_id invalid\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferSameAccount=[
+  "{\"error\":\"400 source and destination accounts cannot be the same\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferThrowsException=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferWithConversionHappyPath=[
+  "{\"transaction_id\":\"424dfead-4625-4dd4-a025-642542eebfdf\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"1ea6d532-faca-4240-aacf-0356b1e0e950\",\"amount\":100,\"account_balance\":200,\"description\":\"tx one\"}"
+]
+
+
+com.zigurs.mintos.ledger.api.LedgerControllerTest.transferWithConversionInvalidAmount=[
+  "{\"error\":\"fx conversion unavailable\"}"
+]
