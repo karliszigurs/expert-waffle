@@ -17,7 +17,6 @@ However, the following is left for next iteration:
 * Fractional currency support - currently only integer values are implemented
   (Implementing proper multi-currency, multi-denomination handling would be
   outside the scope of "about one day" - BigDecimal is a wrong answer)
-  (It is likely that mintos has a library and practices around it already in place)
 * Managing clients and accounts is not implemented - database is pre-seeded with example accounts 
 * Integration of "proper" external database. Currently we use H2 in-process one.
 * Containerization (e.g. docker compose use)

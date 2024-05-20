@@ -1,0 +1,23 @@
+com.zigurs.ledger.api.AccountsControllerTest.getAccountsErrorWhenFetchingAccounts=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.ledger.api.AccountsControllerTest.getAccountsErrorWhenFetchingClient=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.ledger.api.AccountsControllerTest.getAccountsHappyPath=[
+  "[{\"account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"currency\":\"EUR\",\"balance\":1}]"
+]
+
+
+com.zigurs.ledger.api.AccountsControllerTest.getAccountsInvalidClient=[
+  "{\"error\":\"404 client not found\"}"
+]
+
+
+com.zigurs.ledger.api.AccountsControllerTest.getAccountsNoAccounts=[
+  "[]"
+]

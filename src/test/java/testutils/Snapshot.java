@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.UncheckedIOException;
 
 public final class Snapshot {
+
     private static final ObjectMapper objectMapper = buildObjectMapper();
     private static final PrettyPrinter pp = buildDefaultPrettyPrinter();
 
@@ -69,6 +70,7 @@ public final class Snapshot {
                         return this;
                     }
                 };
+
         DefaultPrettyPrinter.Indenter lfOnlyIndenter = new DefaultIndenter("  ", "\n");
         pp.indentArraysWith(lfOnlyIndenter);
         pp.indentObjectsWith(lfOnlyIndenter);

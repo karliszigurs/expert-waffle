@@ -1,0 +1,48 @@
+com.zigurs.ledger.api.TransferControllerTest.transferHappyPath=[
+  "{\"transaction_id\":\"424dfead-4625-4dd4-a025-642542eebfdf\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"1ea6d532-faca-4240-aacf-0356b1e0e950\",\"amount\":100,\"account_balance\":200,\"description\":\"tx one\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferInvalidAmount=[
+  "{\"error\":\"400 amount must be positive\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferInvalidCurrency=[
+  "{\"error\":\"400 currency does not match destination account\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferMalformedAmount=[
+  "{\"error\":\"400 amount 'I'm a teapot!' is invalid\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferMissingAccount=[
+  "{\"error\":\"404 source_account_id invalid\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferMissingDestinationAccount=[
+  "{\"error\":\"404 destination_account_id invalid\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferSameAccount=[
+  "{\"error\":\"400 source and destination accounts cannot be the same\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferThrowsException=[
+  "{\"error\":\"internal error\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferWithConversionHappyPath=[
+  "{\"transaction_id\":\"424dfead-4625-4dd4-a025-642542eebfdf\",\"timestamp\":\"2024-05-17T08:07:05Z\",\"type\":\"DEBIT\",\"status\":\"COMPLETED\",\"source_account_id\":\"306b74d2-adea-4592-9f8a-981e80a7e041\",\"destination_account_id\":\"1ea6d532-faca-4240-aacf-0356b1e0e950\",\"amount\":100,\"account_balance\":200,\"description\":\"tx one\"}"
+]
+
+
+com.zigurs.ledger.api.TransferControllerTest.transferWithConversionInvalidAmount=[
+  "{\"error\":\"currency conversion unavailable\"}"
+]
