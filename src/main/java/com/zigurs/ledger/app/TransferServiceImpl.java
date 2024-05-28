@@ -1,7 +1,7 @@
 package com.zigurs.ledger.app;
 
-import com.zigurs.ledger.data.AccountsRepository;
 import com.zigurs.ledger.api.TransferService;
+import com.zigurs.ledger.data.AccountsRepository;
 import com.zigurs.ledger.data.TransactionsRepository;
 import com.zigurs.ledger.model.Account;
 import com.zigurs.ledger.model.Transaction;
@@ -47,7 +47,7 @@ public class TransferServiceImpl implements TransferService {
         // Note that we still risk circular deadlocks (A>B>C, B>C>A, C>A>B, etc), however chances of this are
         // significantly lower. Solving this would require implementing a reliable jobs/queue mechanic
         // that decouples debit transactions from credit ones completely.
-        Account sourceAccount = null, destinationAccount = null;
+        Account sourceAccount, destinationAccount;
 
         // lock "smallest" account ID first
         if (sourceAccountId.compareTo(destinationAccountId) > 0) {

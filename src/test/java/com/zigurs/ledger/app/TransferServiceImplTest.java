@@ -20,14 +20,12 @@ import static org.mockito.Mockito.*;
 
 class TransferServiceImplTest {
 
+    private static final UUID exampleUUID = UUID.fromString("d4a8ad83-93b5-4114-9df5-61127a6c61de");
+    private static final UUID exampleUUID2 = UUID.fromString("413a0b12-985d-4437-9490-bdeddb617e9e");
+    private static final BigInteger exampleAmount = BigInteger.valueOf(1L);
     private TransferServiceImpl transferService;
     private AccountsRepository accountsRepository;
     private TransactionsRepository transactionsRepository;
-
-    private static final UUID exampleUUID = UUID.fromString("d4a8ad83-93b5-4114-9df5-61127a6c61de");
-    private static final UUID exampleUUID2 = UUID.fromString("413a0b12-985d-4437-9490-bdeddb617e9e");
-
-    private static final BigInteger exampleAmount = BigInteger.valueOf(1L);
 
     @BeforeEach
     void setUp() {
@@ -88,16 +86,14 @@ class TransferServiceImplTest {
 
         when(accountsRepository.findByIdForUpdate(exampleUUID)).thenReturn(Optional.of(account));
 
-        assertThrows(TransferService.TransferException.class, () -> {
-                    Transaction tx = transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID,
-                            exampleAmount,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(TransferService.TransferException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID,
+                        exampleAmount,
+                        "happy transfer"
+                )
         );
 
         verify(accountsRepository, times(0)).findByIdForUpdate(any(UUID.class));
@@ -147,16 +143,14 @@ class TransferServiceImplTest {
         when(accountsRepository.findByIdForUpdate(exampleUUID)).thenReturn(Optional.empty());
 
         assertThrows(TransferService.TransferException.class,
-                () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID2,
-                            exampleAmount,
-                            ""
-                    );
-                }
+                () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID2,
+                        exampleAmount,
+                        ""
+                )
         );
 
         verify(accountsRepository, times(1)).findByIdForUpdate(exampleUUID);
@@ -171,16 +165,14 @@ class TransferServiceImplTest {
         when(accountsRepository.findByIdForUpdate(exampleUUID2)).thenReturn(Optional.empty());
 
         assertThrows(TransferService.TransferException.class,
-                () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID2,
-                            exampleAmount,
-                            ""
-                    );
-                }
+                () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID2,
+                        exampleAmount,
+                        ""
+                )
         );
 
         verify(accountsRepository, times(1)).findByIdForUpdate(exampleUUID);
@@ -200,16 +192,14 @@ class TransferServiceImplTest {
         when(accountsRepository.findByIdForUpdate(exampleUUID)).thenReturn(Optional.of(account));
         when(accountsRepository.findByIdForUpdate(exampleUUID2)).thenReturn(Optional.empty());
 
-        assertThrows(TransferService.TransferException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID2,
-                            exampleAmount,
-                            exampleUUID,
-                            exampleAmount,
-                            ""
-                    );
-                }
+        assertThrows(TransferService.TransferException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID2,
+                        exampleAmount,
+                        exampleUUID,
+                        exampleAmount,
+                        ""
+                )
         );
 
         verify(accountsRepository, times(1)).findByIdForUpdate(exampleUUID2);
@@ -218,95 +208,79 @@ class TransferServiceImplTest {
 
     @Test
     void constructorNullChecks() throws TransferService.TransferException {
-        assertThrows(NullPointerException.class, () -> {
-                    new TransferServiceImpl(
-                            accountsRepository,
-                            null
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> new TransferServiceImpl(
+                        accountsRepository,
+                        null
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    new TransferServiceImpl(
-                            null,
-                            transactionsRepository
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> new TransferServiceImpl(
+                        null,
+                        transactionsRepository
+                )
         );
     }
 
     @Test
     void transferNullChecks() throws TransferService.TransferException {
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            null,
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID2,
-                            exampleAmount,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        null,
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID2,
+                        exampleAmount,
+                        "happy transfer"
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            null,
-                            exampleAmount,
-                            exampleUUID2,
-                            exampleAmount,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        null,
+                        exampleAmount,
+                        exampleUUID2,
+                        exampleAmount,
+                        "happy transfer"
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            null,
-                            exampleUUID2,
-                            exampleAmount,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        null,
+                        exampleUUID2,
+                        exampleAmount,
+                        "happy transfer"
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            null,
-                            exampleAmount,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        null,
+                        exampleAmount,
+                        "happy transfer"
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID2,
-                            null,
-                            "happy transfer"
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID2,
+                        null,
+                        "happy transfer"
+                )
         );
 
-        assertThrows(NullPointerException.class, () -> {
-                    transferService.transfer(
-                            Instant.now(),
-                            exampleUUID,
-                            exampleAmount,
-                            exampleUUID2,
-                            exampleAmount,
-                            null
-                    );
-                }
+        assertThrows(NullPointerException.class, () -> transferService.transfer(
+                        Instant.now(),
+                        exampleUUID,
+                        exampleAmount,
+                        exampleUUID2,
+                        exampleAmount,
+                        null
+                )
         );
     }
 }

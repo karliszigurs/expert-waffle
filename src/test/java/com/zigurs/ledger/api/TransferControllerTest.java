@@ -86,9 +86,9 @@ class TransferControllerTest {
         when(transferService.transfer(
                 any(),
                 eq(sourceAccount.getId()),
-                eq(BigInteger.valueOf(50)),
+                eq(BigInteger.valueOf(5000)),
                 eq(destinationAccount.getId()),
-                eq(BigInteger.valueOf(50)),
+                eq(BigInteger.valueOf(5000)),
                 anyString()
         )).thenReturn(
                 new Transaction(
@@ -150,8 +150,8 @@ class TransferControllerTest {
                 Optional.of(destinationAccount)
         );
 
-        when(currencyConverterService.convert("EUR", "USD", BigInteger.valueOf(50))).thenReturn(
-                new CurrencyConverterService.CurrencyConversionResult("EUR", "USD", BigInteger.valueOf(75))
+        when(currencyConverterService.convert("EUR", "USD", BigInteger.valueOf(5000))).thenReturn(
+                new CurrencyConverterService.CurrencyConversionResult("EUR", "USD", BigInteger.valueOf(7500))
         );
 
         Instant timestamp = Instant.ofEpochSecond(1715933225L);
@@ -159,9 +159,9 @@ class TransferControllerTest {
         when(transferService.transfer(
                 any(),
                 eq(sourceAccount.getId()),
-                eq(BigInteger.valueOf(75)),
+                eq(BigInteger.valueOf(7500)),
                 eq(destinationAccount.getId()),
-                eq(BigInteger.valueOf(50)),
+                eq(BigInteger.valueOf(5000)),
                 anyString()
         )).thenReturn(
                 new Transaction(
@@ -489,7 +489,7 @@ class TransferControllerTest {
                 Optional.of(destinationAccount)
         );
 
-        when(currencyConverterService.convert("EUR", "USD", BigInteger.valueOf(50))).thenReturn(
+        when(currencyConverterService.convert("EUR", "USD", BigInteger.valueOf(5000))).thenReturn(
                 new CurrencyConverterService.CurrencyConversionResult("EUR", "USD", BigInteger.valueOf(0))
         );
 
@@ -565,8 +565,6 @@ class TransferControllerTest {
         when(currencyConverterService.convert("EUR", "USD", BigInteger.valueOf(50))).thenReturn(
                 new CurrencyConverterService.CurrencyConversionResult("EUR", "USD", BigInteger.valueOf(75))
         );
-
-        Instant timestamp = Instant.ofEpochSecond(1715933225L);
 
         when(transferService.transfer(
                 any(),

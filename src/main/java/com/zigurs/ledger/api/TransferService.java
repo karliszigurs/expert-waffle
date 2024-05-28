@@ -10,12 +10,6 @@ import java.util.UUID;
 
 public interface TransferService {
 
-    class TransferException extends RuntimeException {
-        public TransferException() {
-            super("internal error");
-        }
-    }
-
     /**
      * Implementation should create and store transfer with the specified parameters.
      * Once transaction is safely stored it should be returned so that it can be returned to client.
@@ -36,4 +30,10 @@ public interface TransferService {
             @NonNull BigInteger destinationAmount,
             @NonNull String description
     ) throws TransferException;
+
+    class TransferException extends RuntimeException {
+        public TransferException() {
+            super("internal error");
+        }
+    }
 }

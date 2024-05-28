@@ -6,7 +6,12 @@ import com.zigurs.ledger.api.requests.TransferRequest;
 import com.zigurs.ledger.api.responses.TransactionView;
 import com.zigurs.ledger.data.AccountsRepository;
 import com.zigurs.ledger.model.Account;
+import com.zigurs.ledger.model.Currency;
 import com.zigurs.ledger.model.Transaction;
+import com.zigurs.ledger.model.currencies.EUR;
+import com.zigurs.ledger.model.currencies.JPY;
+import com.zigurs.ledger.model.currencies.TwoDecimalsCurrency;
+import com.zigurs.ledger.model.currencies.USD;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.time.Instant;
 
 /**
@@ -57,8 +63,10 @@ public class TransferController {
             throw new BadRequestException("currency does not match destination account");
         }
 
+        Currency currency = lookupCurrency(request.currency());
+
         // extract supplied amount string
-        BigInteger amount = parseTransferAmount(request.amount());
+        BigInteger amount = parseTransferAmount(currency, request.amount());
 
         if (amount.compareTo(BigInteger.ZERO) < 1) {
             throw new BadRequestException("amount must be positive");
@@ -68,12 +76,22 @@ public class TransferController {
         return ResponseEntity.ok(
                 TransactionView.fromModel(
                         sourceAccount,
-                        transfer(sourceAccount, destinationAccount, amount)
+                        transfer(sourceAccount, destinationAccount, currency, amount)
                 )
         );
     }
 
-    private Transaction transfer(Account sourceAccount, Account destinationAccount, BigInteger amount) throws TransferService.TransferException, CurrencyConverterService.CurrencyConversionException {
+    // TODO - for now we always find at least 2-decimals currency.
+    private Currency lookupCurrency(String currency) {
+        return switch (currency) {
+            case "USD" -> new USD();
+            case "EUR" -> new EUR();
+            case "JPY" -> new JPY();
+            default -> (TwoDecimalsCurrency) () -> currency;
+        };
+    }
+
+    private Transaction transfer(Account sourceAccount, Account destinationAccount, Currency currency, BigInteger amount) throws TransferService.TransferException, CurrencyConverterService.CurrencyConversionException {
         if (sourceAccount.getCurrency().equals(destinationAccount.getCurrency())) {
             // Simple transfer, we can proceed immediately
             return transferService.transfer(
@@ -84,8 +102,8 @@ public class TransferController {
                     amount,
                     String.format( // TODO - add better formatter
                             "Transferred %s %s from %s to %s",
-                            amount,
-                            destinationAccount.getCurrency(),
+                            currency.toFriendlyString(amount),
+                            currency.currencyCode(),
                             sourceAccount.getId(),
                             destinationAccount.getId()
                     )
@@ -94,7 +112,7 @@ public class TransferController {
             // Let's do the FX conversion outside our transaction below
             // as any external request shouldn't lock up our DB.
             CurrencyConverterService.CurrencyConversionResult convertedAmount = currencyConverterService.convert(
-                    destinationAccount.getCurrency(),
+                    currency.currencyCode(),
                     sourceAccount.getCurrency(),
                     amount);
 
@@ -111,22 +129,20 @@ public class TransferController {
                     String.format( // TODO - add better formatter, inject actual conversion rate
                             "Transfer from %s (%s %s) to %s (%s %s) complete",
                             sourceAccount.getId(),
-                            convertedAmount.value(),
+                            convertedAmount.value(), // TODO - need to handle fractions here
                             sourceAccount.getCurrency(),
                             destinationAccount.getId(),
-                            amount,
+                            currency.toFriendlyString(amount),
                             destinationAccount.getCurrency()
                     )
             );
         }
     }
 
-    // TODO - would need to implement better amount parser and
-    //  introduce concept of currencies with different denominators (e.g. JPY vs EUR)
-    private BigInteger parseTransferAmount(String amount) {
+    private BigInteger parseTransferAmount(Currency currency, String amount) {
         try {
-            return new BigInteger(amount);
-        } catch (NumberFormatException e) {
+            return currency.parseFromString(amount);
+        } catch (ParseException e) {
             throw new BadRequestException(String.format("amount '%s' is invalid", amount));
         }
     }

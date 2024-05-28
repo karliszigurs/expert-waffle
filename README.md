@@ -14,9 +14,8 @@ Goal of the application was to follow the specification provided, therefore:
 
 However, the following is left for next iteration:
 
-* Fractional currency support - currently only integer values are implemented
-  (Implementing proper multi-currency, multi-denomination handling would be
-  outside the scope of "about one day" - BigDecimal is a wrong answer)
+* Fractional currency support - only basic support is added and needs further work to handle
+  conversions between different-fractionals (e.g. USD<>JPY) currencies correctly.
 * Managing clients and accounts is not implemented - database is pre-seeded with example accounts 
 * Integration of "proper" external database. Currently we use H2 in-process one.
 * Containerization (e.g. docker compose use)
@@ -33,4 +32,3 @@ However, the following is left for next iteration:
 * Pre-seed data is located under `main/resources/db.migration.h2` 
 * If DB cleanup is required delete \*.db files created in the root directory.
   DB will be automatically recreated on the next application start.
-
